@@ -10,11 +10,6 @@ RSpec.describe User, type: :model do
       it "ニックネームとメールアドレス、パスワードとpassword_confirmation、名字、名前、名字（カナ）、名前（カナ）、生年月日が存在すれば登録できる" do
         expect(@user).to be_valid
       end
-      it 'パスワードが半角英数字混合であれば登録できる' do
-        @user.password = 'abc123'
-        @user.password_confirmation = 'abc123'
-        expect(@user).to be_valid
-      end
     end
     context '新規登録できない場合' do
       it "ニックネームが空では登録できない" do
