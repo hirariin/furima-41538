@@ -14,4 +14,7 @@ class Item < ApplicationRecord
 
    validates :item_category_id, :item_sales_status_id, :item_shipping_fee_status_id, :prefecture_id,
              :item_scheduled_delivery_id, numericality: { other_than: 1 , message: "can't be blank"} 
+
+   validates :sell_price, numericality: { only_integer: true, message: 'is not a number' }
+
 end
