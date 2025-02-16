@@ -29,27 +29,27 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Item info can't be blank")
       end
       it 'item_categoryが空では出品できない' do
-        @item.item_category_id=''
+        @item.item_category_id='1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Item category can't be blank")
       end
       it 'item_sales_statusが空では出品できない' do
-        @item.item_sales_status_id=''
+        @item.item_sales_status_id='1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Item sales status can't be blank")
       end
       it 'item_shipping_fee_statusが空では出品できない' do
-        @item.item_shipping_fee_status_id=''
+        @item.item_shipping_fee_status_id='1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Item shipping fee status can't be blank")
       end
       it 'prefectureが空では出品できない' do
-        @item.prefecture_id=''
+        @item.prefecture_id='1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Prefecture can't be blank")
       end
       it 'item_scheduled_deliveryが空では出品できない' do
-        @item.item_scheduled_delivery_id=''
+        @item.item_scheduled_delivery_id='1'
         @item.valid?
         expect(@item.errors.full_messages).to include("Item scheduled delivery can't be blank")
       end
@@ -61,15 +61,22 @@ RSpec.describe Item, type: :model do
       it 'sell_price が300未満だと出品できない' do
         @item.sell_price = 299
         @item.valid?
+        expect(@item.errors[:sell_price]).to include('は300以上9,999,999以下の整数でなければなりません')
       end
       it 'sell_price が9,999,999を超えると出品できない' do
         @item.sell_price = 10_000_000
         @item.valid?
+        expect(@item.errors[:sell_price]).to include('は300以上9,999,999以下の整数でなければなりません')
       end
       it '価格が全角数字だと保存できない' do
         @item.sell_price = '５００'
         @item.valid?
-        expect(@item.errors.full_messages).to include('Sell price is not a number')
+        expect(@item.errors[:sell_price]).to include('は300以上9,999,999以下の整数でなければなりません')
+      end
+      it 'ユーザーが紐づいていないと保存できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors[:user]).to include('must exist')
       end
     end
   end

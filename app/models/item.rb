@@ -2,6 +2,7 @@ class Item < ApplicationRecord
    belongs_to :user
    has_one_attached :image
 
+
    extend ActiveHash::Associations::ActiveRecordExtensions
    belongs_to :item_category
    belongs_to :item_sales_status
@@ -15,6 +16,6 @@ class Item < ApplicationRecord
    validates :item_category_id, :item_sales_status_id, :item_shipping_fee_status_id, :prefecture_id,
              :item_scheduled_delivery_id, numericality: { other_than: 1 , message: "can't be blank"} 
 
-   validates :sell_price, numericality: { only_integer: true, message: 'is not a number' }
-
+             validates :sell_price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'は300以上9,999,999以下の整数でなければなりません' }, 
+             format: { with: /\A[0-9]+\z/, message: 'は半角数字で入力してください' }
 end
