@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
 before_action :set_item, only: [:index, :create]
+before_action :authenticate_user!
+before_action :redirect_if_sold_or_not_owner, only: [:index, :create]
 
 def index
   gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
@@ -36,5 +38,11 @@ def pay_item
     card: order_form_params[:token],
     currency: 'jpy'
   )
+end
+
+def redirect_if_sold_or_not_owner
+  if @item.sold? || current_user == @item.user
+    redirect_to root_path
+  end
 end
 end
