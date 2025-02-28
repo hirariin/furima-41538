@@ -8,5 +8,6 @@ FactoryBot.define do
     addresses { '港北区1-1-1' }
     building { '横浜タワー' }
     phone_number { '09012345678' }
+    token {"tok_abcdefghijk00000000000000000"}
   end
 end

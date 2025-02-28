@@ -66,6 +66,11 @@ RSpec.describe OrderForm, type: :model do
         expect(@order_form).not_to be_valid
         expect(@order_form.errors.full_messages).to include('Phone number is invalid. Must be 10 to 11 digits long and contain only numbers')
       end
+      it "tokenが空では登録できないこと" do
+        @order_form.token = ''
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include("Token can't be blank")
+      end
       
     end
   end
