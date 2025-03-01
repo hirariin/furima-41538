@@ -11,9 +11,8 @@ class OrderForm
     validates :addresses
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: "is invalid. Must be 10 to 11 digits long and contain only numbers" }
     validates :token
-    validates :prefecture_id
   end
-  validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}
+  validates :prefecture_id, numericality: {other_than: 1, message: "can't be blank"}
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
